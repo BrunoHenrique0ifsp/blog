@@ -22,7 +22,7 @@
         {
             $set[] = "{$campo} = {$dado}";
         }
-        $instrucao .= ' SET '.implode (' ', $set);
+        $instrucao .= ' SET '.implode (', ', $set);
 
         if (!empty($criterio))
         {
@@ -55,12 +55,17 @@
     function select (string $entidade, array $campos, array $criterio = [], string $ordem = null) : string
     {
         $instrucao = "SELECT ".implode(', ' , $campos);
-        $instrucao .= ' WHERE ';
+        $instrucao .= " FROM  {$entidade}";
 
-        foreach ($criterio as $expressao)
+        if(!empty($criterio))
         {
-            $instrucao .= ''.implode(' ', $expressao);
+            $instrucao .= ' WHERE ';
+             foreach ($criterio as $expressao)
+        {
+            $instrucao .= ' '.implode(' ', $expressao);
         }
+        }
+        
         if(!empty($ordem))
         {
             $instrucao .= " ORDER BY $ordem ";

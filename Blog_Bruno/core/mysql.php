@@ -61,7 +61,7 @@ function atualiza(string $entidade, array $dados, array $criterio = []) : bool
 
         $$nome_campo = $dado;
     }
-
+    
     $instrucao = update($entidade, $coringa_dados, $coringa_criterio);
 
     $conexao = conecta();
@@ -69,10 +69,11 @@ function atualiza(string $entidade, array $dados, array $criterio = []) : bool
     $stmt = mysqli_prepare($conexao, $instrucao);
 
     if(isset($tipo)){
-        $comando = 'mysqli_stmt_bind_param($stmt, \'';
-        $comando .= implode('', $tipo) . '\', ';
-        $comando .= '$' . implode(', $', array_keys($dados));
-        $comando .= ', $' . implode(', $', $campos_criterio) . ');';
+        $comando = 'mysqli_stmt_bind_param($stmt,';
+        $comando .= "'". implode('', $tipo). "'";
+        $comando .= ', $'. implode(', $', array_keys($dados));
+        $comando .= ', $'. implode(', $', $campos_criterio);
+        $comando .= ');';
         eval($comando);
     }
 
@@ -165,6 +166,8 @@ function buscar(string $entidade, array $campos = ['*'], array $criterio = [], s
 
 
     $instrucao = select($entidade, $campos, $coringa_criterio, $ordem);
+
+    //echo $instrucao;
 
     $conexao = conecta();
 
