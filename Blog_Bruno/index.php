@@ -29,6 +29,9 @@
                 <?php
                     include 'includes/busca.php';
 
+                    date_default_timezone_set('America/Sao_Paulo');
+
+
                     require_once 'includes/funcoes.php';
                     require_once 'core/conexao_mysql.php';
                     require_once 'core/sql.php';
@@ -39,6 +42,7 @@
                     }
 
                     $data_atual = date('Y-m-d H:i:s');
+                    
 
                     $criterio = [
                         ['data_postagem', '<=', $data_atual]
@@ -65,7 +69,7 @@
                         'data_postagem DESC'
                     );
                 ?>
-                
+               </div> 
                 <div class="list-group">
                     <?php foreach ($posts as $post): 
                         $data = date_create($post['data_postagem']);
